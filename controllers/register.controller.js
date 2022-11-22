@@ -13,13 +13,13 @@ exports.handleRegister = async (req, res) => {
 		const usernameExist = await User.exists({ username: data.username });
 
 		if (emailExist != null) {
-			return res.status(403).send(Payload(403, "email already exsisted"));
+			return res.status(403).send(Payload(403, "email already exsisted", null));
 		}
 
 		if (usernameExist != null && emailExist != null) {
 			return res
 				.status(403)
-				.send(Payload(403, "username and email already exsisted"));
+				.send(Payload(403, "username and email already exsisted", null));
 		}
 		// hash password
 		const saltRounds = 7;
