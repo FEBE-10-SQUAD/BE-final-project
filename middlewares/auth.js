@@ -1,0 +1,35 @@
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const { Payload } = require("../templates/response");
+
+exports.auth = async (req, res, next) => {
+	const bearerAuth = req.headers.authorization;
+	console.log(bearerAuth);
+
+	if (bearerAuth.split(" ")[0] !== "Bearer" || bearerAuth == undefined)
+		return res
+			.status(401)
+			.send(Payload(401, "Harus menggunakan authentikasi bearer", null));
+
+	const token = bearerAuth.split(" ")[1];
+
+	try {
+		const { role } = jwt.verify(token, process.env.SECRET_KEY);
+
+		if (role == "admin" || role == "user") {
+			req.role = role;
+			return next();
+		} else {
+			return res.status(401).send(Payload(401, "Siapa anda?", null));
+		}
+	} catch (err) {
+		return res.status(401).send(Payload(401, "Token Expired", null));
+	}
+};
+
+exports.adminAuth = (res, req, next) => {
+	if (req.role != "admin") {
+		res.status(403).send(Payload(403, "Forbidden Access", null));
+	}
+	next();
+};
