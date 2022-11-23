@@ -4,9 +4,8 @@ const { Payload } = require("../templates/response");
 
 exports.auth = async (req, res, next) => {
 	const bearerAuth = req.headers.authorization;
-	console.log(bearerAuth);
 
-	if (bearerAuth.split(" ")[0] !== "Bearer" || bearerAuth == undefined)
+	if (bearerAuth == undefined || bearerAuth.split(" ")[0] !== "Bearer")
 		return res
 			.status(401)
 			.send(Payload(401, "Harus menggunakan authentikasi bearer", null));
