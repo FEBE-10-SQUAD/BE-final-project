@@ -27,7 +27,7 @@ http://localhost:8080/v1/admin/jobs/:id
 **Get Data By User Id**
 
 ```
-http://localhost:8080/v1/admin/:id/jobs/
+http://localhost:8080/v1/admin/:id/jobs
 ```
 
 **Post Data**
