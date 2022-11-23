@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const User = require("../model/user.model");
 const Profile = require("../model/profile.model");
 const { Payload } = require("../templates/response");
