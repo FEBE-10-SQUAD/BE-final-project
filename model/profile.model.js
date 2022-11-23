@@ -6,6 +6,10 @@ const profileSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	// userId: {
+	// 	type: Object,
+	// 	ref: "User"
+	// },
 	nama: String,
 	kota: String,
 	alamat: String,
