@@ -75,3 +75,8 @@ exports.handlProfileUpdate = async (req, res) => {
 		return res.status(500).send(Payload(500, "database error", err));
 	}
 };
+
+exports.handleCVUpload = async (req, res) => {
+	console.log(await req.file);
+	return res.json("test");
+};
