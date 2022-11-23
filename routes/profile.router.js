@@ -6,6 +6,6 @@ const { auth, adminAuth } = require("../middlewares/auth");
 
 const middlewares = [auth];
 
-router.put("/:username", middlewares, handlProfileUpdate);
+router.put("/", middlewares, handlProfileUpdate);
 
 module.exports = router;

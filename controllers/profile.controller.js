@@ -1,10 +1,12 @@
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+
 const User = require("../model/user.model");
 const Profile = require("../model/profile.model");
 const { Payload } = require("../templates/response");
 
 exports.handlProfileUpdate = async (req, res) => {
 	const username = res.locals.username;
-	const role = res.locals.role;
 	try {
 		const dbUserData = await User.findOne({ username }, "-_id -password -__v");
 
@@ -23,16 +25,51 @@ exports.handlProfileUpdate = async (req, res) => {
 
 	const body = req.body;
 	const userUpdate = body.user;
+
 	const profileUpdate = body.profile;
+	profileUpdate.username = userUpdate.username;
+
+	if (profileUpdate.username != undefined) {
+		let dbUserData = await User.findOne({ username: profileUpdate.username });
+		if (dbUserData != null) {
+			return res
+				.status(401)
+				.send(Payload(401, "username already exsist", null));
+		}
+	}
+
 	try {
-		var dbUserData = await User.findOneAndUpdate({ username }, userUpdate);
-		var dbProfileData = await Profile.findOneAndUpdate(
+		let dbUserData = await User.findOneAndUpdate({ username }, userUpdate);
+
+		if (dbUserData == null) {
+			return res.status(500).send(Payload(500, "data not updated", null));
+		}
+
+		// jwt
+		const tokenPayload = {
+			username: profileUpdate.username,
+			role: dbUserData.role,
+		};
+
+		const newToken = jwt.sign(tokenPayload, process.env.SECRET_KEY);
+
+		const dbProfileData = await Profile.findOneAndUpdate(
 			{ username },
 			profileUpdate
 		);
 
-		if (dbProfileData == null || dbUserData == null) {
+		if (dbProfileData == null) {
 			return res.status(500).send(Payload(500, "data not updated", null));
+		}
+
+		if (profileUpdate.username == undefined) {
+			return res.status(201).send(Payload(201, "updated profile", null));
+		} else {
+			return res
+				.status(201)
+				.send(
+					Payload(201, "updated username and profile", { token: newToken })
+				);
 		}
 	} catch (err) {
 		return res.status(500).send(Payload(500, "database error", err));
