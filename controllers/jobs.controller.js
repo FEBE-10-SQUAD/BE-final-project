@@ -102,7 +102,7 @@ const handleGetJobByUserId = async (req, res) => {
 
 		const { id } = req.params;
 
-		const data = await jobs.find({ userId: id});
+		const data = await jobs.find({ userId: id });
 
 		return res
 			.status(200)
@@ -171,57 +171,104 @@ const handleAdminCreateJob = async (req, res) => {
 
 // ----------------- End Handle Admin Create Job ----------------- //
 
-// const testPut = async (req, res) => {
-// 	const data = req.body;
 
-// 	const filter = {
-// 		_id: data.id,
-// 	};
+// ----------------- Handle Admin Update Job ----------------- //
 
-// 	const update = {
-// 		nama: data.nama,
-// 	};
+const handleAdminUpdateJob = async (req, res) => {
 
-// 	try {
-// 		const updateResponse = await Test.findOneAndUpdate(filter, update);
+	try {
 
-// 		return res.status(201).send(
-// 			payloadConstructor(201, "data updated sucessfully", {
-// 				id: updateResponse._id,
-// 			})
-// 		);
-// 	} catch (err) {
-// 		return res
-// 			.status(500)
-// 			.send(payloadConstructor(500, "internal server error", err));
-// 	}
-// };
+		const { id } = req.params;
 
-// const testDelete = async (req, res) => {
-// 	const data = req.body;
-// 	const filter = {
-// 		nama: data.nama,
-// 	};
-// 	try {
-// 		const deleteResponse = await Test.deleteOne(filter); // bisa juga deleteMany
+		const { category, name, company, employee, experience, salary, description } = req.body;
 
-// 		res.status(200).send(
-// 			payloadConstructor(200, "data deleted successfully", {
-// 				deletedCount: deleteResponse.deletedCount,
-// 			})
-// 		);
-// 	} catch (err) {
-// 		return res
-// 			.status(500)
-// 			.send(payloadConstructor(500, "internal server error", err));
-// 	}
-// };
+		const image = req.file;
+
+		const getJobDataById = await jobs.findById(id);
+
+		if (getJobDataById.id == id) {
+
+			let images = "";
+
+			if (image) {
+
+				const fileBase64 = image.buffer.toString("base64");
+				const file = `data:${image.mimetype};base64,${fileBase64}`;
+				const cloudinaryImage = await cloudinary.uploader.upload(file);
+				images = cloudinaryImage.url;
+
+			} else {
+				images = getJobDataById.image;
+			}
+
+			const updatedJob = await jobs.updateOne({ id }, {
+				category,
+				name,
+				company,
+				employee,
+				experience,
+				salary,
+				description,
+				image: images
+			});
+
+			return res.status(201).send(
+				payloadConstructor(201, "Data updated sucessfully", {
+					updatedJob: updatedJob.modifiedCount
+				})
+			);
+		}
+
+	} catch (err) {
+
+		return res
+			.status(500)
+			.send(payloadConstructor(500, "Internal server error", err));
+
+	}
+};
+
+// ----------------- End Handle Admin Update Job ----------------- //
+
+
+// ----------------- Handle Admin Delete Job ----------------- //
+
+const handleAdminDeleteJob = async (req, res) => {
+	
+	try {
+
+		const { id } = req.params;
+
+		const getJobDataById = await jobs.findById(id);
+
+		if (getJobDataById.id == id) {
+
+			const deletedJob = await jobs.deleteOne({ id });
+
+			res.status(200).send(
+				payloadConstructor(200, "Data deleted successfully", {
+					deletedJob: deletedJob.deletedCount,
+				})
+			);
+		}
+
+	} catch (err) {
+
+		return res
+			.status(500)
+			.send(payloadConstructor(500, "Internal server error", err));
+
+	}
+};
+
+// ----------------- End Handle Admin Delete Job ----------------- //
+
 
 module.exports = {
 	handleGetJob,
 	handleGetJobById,
 	handleGetJobByUserId,
-	handleAdminCreateJob
-	// testPut,
-	// testDelete,
+	handleAdminCreateJob,
+	handleAdminUpdateJob,
+	handleAdminDeleteJob
 };
