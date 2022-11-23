@@ -22,6 +22,7 @@ router.use("/public/files", express.static(path.join(__dirname, "/storages")));
 const {
 	handleGetJob,
 	handleGetJobById,
+	handleGetJobByUserId,
 	handleAdminCreateJob
 	// testPut,
 	// testDelete,
@@ -34,6 +35,7 @@ const {
 
 router.get("/jobs", handleGetJob);
 router.get("/jobs/:id", handleGetJobById);
+router.get("/:id/jobs", handleGetJobByUserId);
 router.post("/jobs", fileUpload.single('image'), handleAdminCreateJob);
 // router.put("/", testPut);
 // router.delete("/", testDelete);
