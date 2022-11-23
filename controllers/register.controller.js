@@ -24,7 +24,7 @@ exports.handleRegister = async (req, res) => {
 				.send(Payload(403, "username and email already exsisted", null));
 		}
 		// hash password
-		hash = bcrypt.hashSync(data.password, process.env.SALT_ROUNDS);
+		hash = bcrypt.hashSync(data.password, parseInt(process.env.SALT_ROUNDS));
 		data.password = hash;
 
 		// create new data
