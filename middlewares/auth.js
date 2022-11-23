@@ -4,9 +4,8 @@ const { Payload } = require("../templates/response");
 
 exports.auth = async (req, res, next) => {
 	const bearerAuth = req.headers.authorization;
-	console.log(bearerAuth);
 
-	if (bearerAuth.split(" ")[0] !== "Bearer" || bearerAuth == undefined)
+	if (bearerAuth == undefined || bearerAuth.split(" ")[0] !== "Bearer")
 		return res
 			.status(401)
 			.send(Payload(401, "Harus menggunakan authentikasi bearer", null));
@@ -14,10 +13,11 @@ exports.auth = async (req, res, next) => {
 	const token = bearerAuth.split(" ")[1];
 
 	try {
-		const { role } = jwt.verify(token, process.env.SECRET_KEY);
+		const { username, role } = jwt.verify(token, process.env.SECRET_KEY);
 
 		if (role == "admin" || role == "user") {
-			req.role = role;
+			req.pass.role = role;
+			req.pass.username = username;
 			return next();
 		} else {
 			return res.status(401).send(Payload(401, "Siapa anda?", null));
