@@ -1,6 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { Payload } = require("../templates/response");
+const User = require("../model/user.model");
 
 exports.auth = async (req, res, next) => {
 	const bearerAuth = req.headers.authorization;
@@ -13,11 +14,14 @@ exports.auth = async (req, res, next) => {
 	const token = bearerAuth.split(" ")[1];
 
 	try {
-		const { username, role } = await jwt.verify(token, process.env.SECRET_KEY);
+		const { username, role, email } = jwt.verify(token, process.env.SECRET_KEY);
+
+		const getUserByEmail = await User.findOne(email);
 
 		if (role == "admin" || role == "user") {
 			res.locals.role = role;
 			res.locals.username = username;
+			req.user = getUserByEmail;
 			return next();
 		} else {
 			return res.status(401).send(Payload(401, "Siapa anda?", null));
