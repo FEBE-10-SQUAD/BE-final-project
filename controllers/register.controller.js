@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const User = require("../model/user.model");
 const Profile = require("../model/profile.model");
 const { Payload } = require("../templates/response");
@@ -22,8 +24,7 @@ exports.handleRegister = async (req, res) => {
 				.send(Payload(403, "username and email already exsisted", null));
 		}
 		// hash password
-		const saltRounds = 7;
-		hash = bcrypt.hashSync(data.password, saltRounds);
+		hash = bcrypt.hashSync(data.password, process.env.SALT_ROUNDS);
 		data.password = hash;
 
 		// create new data
