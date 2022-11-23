@@ -7,31 +7,43 @@
 **Get Data**
 
 ```
-http://localhost:8080/v1/admin/jobs
+GET: http://localhost:8080/v1/admin/jobs
 ```
 
 ```
-http://localhost:8080/v1/admin/jobs?category=Backend
+GET: http://localhost:8080/v1/admin/jobs?category=Backend
 ```
 
 ```
-http://localhost:8080/v1/admin/jobs?category=Backend&name=Web
+GET: http://localhost:8080/v1/admin/jobs?category=Backend&name=Web
 ```
 
 **Get Data By Id**
 
 ```
-http://localhost:8080/v1/admin/jobs/:id
+GET: http://localhost:8080/v1/admin/jobs/:id
 ```
 
 **Get Data By User Id**
 
 ```
-http://localhost:8080/v1/admin/:id/jobs
+GET: http://localhost:8080/v1/admin/:id/jobs
 ```
 
 **Post Data**
 
 ```
-http://localhost:8080/v1/admin/jobs
+POST: http://localhost:8080/v1/admin/jobs
+```
+
+**Update Data**
+
+```
+UPDATE: http://localhost:8080/v1/admin/jobs/:id
+```
+
+**Delete Data**
+
+```
+DELETE: http://localhost:8080/v1/admin/jobs:id
 ```
