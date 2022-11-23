@@ -23,9 +23,9 @@ const {
 	handleGetJob,
 	handleGetJobById,
 	handleGetJobByUserId,
-	handleAdminCreateJob
-	// testPut,
-	// testDelete,
+	handleAdminCreateJob,
+	handleAdminUpdateJob,
+	handleAdminDeleteJob
 } = require("../controllers/jobs.controller");
 
 // ----------------- End Import Controller ----------------- //
@@ -37,8 +37,8 @@ router.get("/jobs", handleGetJob);
 router.get("/jobs/:id", handleGetJobById);
 router.get("/:id/jobs", handleGetJobByUserId);
 router.post("/jobs", fileUpload.single('image'), handleAdminCreateJob);
-// router.put("/", testPut);
-// router.delete("/", testDelete);
+router.put("/jobs/:id", fileUpload.single('image'), handleAdminUpdateJob);
+router.delete("/jobs/:id", handleAdminDeleteJob);
 
 // ----------------- Define Routes ----------------- //
 
