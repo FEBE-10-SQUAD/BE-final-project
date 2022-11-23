@@ -82,7 +82,6 @@ const handleGetJobByUserId = async (req, res) => {
 const handleAdminCreateJob = async (req, res) => {
 	try {
 		const {
-			userId,
 			category,
 			name,
 			company,
@@ -93,6 +92,8 @@ const handleAdminCreateJob = async (req, res) => {
 		} = req.body;
 
 		const image = req.file;
+
+		const userId = req.user._id;
 
 		let images = "";
 

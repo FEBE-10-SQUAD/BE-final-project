@@ -12,7 +12,8 @@ const jobsSchema = new Schema(
 		image: String,
 		description: String,
 		userId: {
-			type: Object
+			type: Object,
+			ref: "User"
 		}
 	},
 	{

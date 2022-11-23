@@ -29,14 +29,16 @@ const {
 
 // ----------------- End Import Controller ----------------- //
 
+const middlewares = require("../middlewares/auth");
+
 // ----------------- Define Routes ----------------- //
 
 router.get("/jobs", handleGetJob);
 router.get("/jobs/:id", handleGetJobById);
-router.get("/:id/jobs", handleGetJobByUserId);
-router.post("/jobs", fileUpload.single("image"), handleAdminCreateJob);
-router.put("/jobs/:id", fileUpload.single("image"), handleAdminUpdateJob);
-router.delete("/jobs/:id", handleAdminDeleteJob);
+router.get("/:id/jobs", middlewares.auth, handleGetJobByUserId);
+router.post("/jobs", middlewares.auth, fileUpload.single("image"), handleAdminCreateJob);
+router.put("/jobs/:id", middlewares.auth, fileUpload.single("image"), handleAdminUpdateJob);
+router.delete("/jobs/:id", middlewares.auth, handleAdminDeleteJob);
 
 // ----------------- Define Routes ----------------- //
 
