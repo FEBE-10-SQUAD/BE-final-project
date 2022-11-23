@@ -13,11 +13,11 @@ exports.auth = async (req, res, next) => {
 	const token = bearerAuth.split(" ")[1];
 
 	try {
-		const { username, role } = jwt.verify(token, process.env.SECRET_KEY);
+		const { username, role } = await jwt.verify(token, process.env.SECRET_KEY);
 
 		if (role == "admin" || role == "user") {
-			req.pass.role = role;
-			req.pass.username = username;
+			req.role = role;
+			req.username = username;
 			return next();
 		} else {
 			return res.status(401).send(Payload(401, "Siapa anda?", null));
