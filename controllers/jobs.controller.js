@@ -94,6 +94,33 @@ const handleGetJobById = async (req, res) => {
 // ----------------- End Handle Get Job By Id ----------------- //
 
 
+// ----------------- Handle Get Job By User Id ----------------- //
+
+const handleGetJobByUserId = async (req, res) => {
+
+	try {
+
+		const { id } = req.params;
+
+		const data = await jobs.find({ userId: id});
+
+		return res
+			.status(200)
+			.send(payloadConstructor(200, "Data successfully grabbed", data));
+
+	} catch (err) {
+
+		return res
+			.status(500)
+			.send(payloadConstructor(500, "Internal server error", err));
+
+	}
+
+};
+
+// ----------------- End Handle Get Job By User Id ----------------- //
+
+
 // ----------------- Handle Admin Create Job ----------------- //
 
 const handleAdminCreateJob = async (req, res) => {
@@ -193,6 +220,7 @@ const handleAdminCreateJob = async (req, res) => {
 module.exports = {
 	handleGetJob,
 	handleGetJobById,
+	handleGetJobByUserId,
 	handleAdminCreateJob
 	// testPut,
 	// testDelete,
