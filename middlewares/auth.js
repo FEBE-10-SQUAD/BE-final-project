@@ -16,8 +16,8 @@ exports.auth = async (req, res, next) => {
 		const { username, role } = await jwt.verify(token, process.env.SECRET_KEY);
 
 		if (role == "admin" || role == "user") {
-			req.role = role;
-			req.username = username;
+			res.locals.role = role;
+			res.locals.username = username;
 			return next();
 		} else {
 			return res.status(401).send(Payload(401, "Siapa anda?", null));
