@@ -7,8 +7,9 @@ const { Payload } = require("../templates/response");
 const bcrypt = require("bcrypt");
 
 exports.handleRegister = async (req, res) => {
+	
 	const data = req.body;
-	data.role = "user";
+	// data.role = "user";
 
 	try {
 		const emailExist = await User.exists({ email: data.email });
@@ -32,13 +33,13 @@ exports.handleRegister = async (req, res) => {
 		const profile = new Profile({ username: data.username });
 
 		// send data to db
-		await user.save();
+		const userData = await user.save();
 		await profile.save();
 
 		return res
 			.status(201)
-			.send(Payload(201, "Account successfully created", null));
+			.send(Payload(201, "Account successfully created", userData));
 	} catch (err) {
-		return res.status(500).send(Payload(500, "Internal Server Error", null));
+		return res.status(500).send(Payload(500, "Internal server error", err));
 	}
 };
