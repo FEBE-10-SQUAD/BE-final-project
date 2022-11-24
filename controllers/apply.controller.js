@@ -18,9 +18,9 @@ const handleUserApplyJob = async(req, res, next) => {
         const userId = req.user._id;
 
         const applyInput = new apply({
-			companyId,
+			userId,
+            companyId,
 			jobId,
-            userId,
             isAccepted
 		});
 
@@ -49,7 +49,10 @@ const handleGetApplyJobByAdminId = async(req, res, next) => {
         
         const { id } = req.params;
 
-        const getApplyJobByAdminId = await apply.findById(id).populate('companyId');
+        const getApplyJobByAdminId = await apply.find({ companyId: id })
+        .populate({path: 'userId', select: 'username'})
+        .populate({path: 'companyId', select: 'username'})
+        .populate({path: 'jobId', select: ['name', 'salary', 'image', 'description']});
 
         return res
 			.status(200)
