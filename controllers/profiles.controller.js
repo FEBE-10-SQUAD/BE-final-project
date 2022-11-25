@@ -65,4 +65,61 @@ const handleProfileUpdate = async (req, res, next) => {
 
 };
 
-module.exports = { handleProfileUpdate };
+
+        /* -- Users Create Profile -- */
+
+    const handleProfileCreate = async (req, res, next) => {
+
+        try {
+            
+            const {
+                username,
+                nama,
+                kota,
+                alamat,
+                tanggal_lahir,
+                no_handphone,
+                about_me,
+                bookmark
+            } = req.body
+
+            const document = req.file
+
+            const id_user = req.user._id
+
+            let documents = ""
+
+            if(document) {
+                const fileBase64 = document.buffer.toString("base64");
+                const file = `data:${document.mimetype};base64,${fileBase64}`;
+                const cloudinaryDocument = await cloudinary.uploader.upload(file);
+                documents = cloudinaryDocument.url
+            }
+
+            const postProfile = new Profile({
+                id_user,
+                username,
+                nama,
+                kota,
+                alamat,
+                tanggal_lahir,
+                no_handphone,
+                about_me,
+                bookmark,
+                document: documents
+            })
+
+            await postProfile.save()
+
+            return res.status(201).send(Payload(201, "Data created successfully", postProfile))
+
+        } catch (error) {
+            
+            return res.status(500).send(Payload(500, "Internal server error", error))
+
+        }
+    }
+
+        /* -- End Users Create Profile -- */
+        
+module.exports = { handleProfileUpdate, handleProfileCreate };

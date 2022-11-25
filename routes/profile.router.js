@@ -14,6 +14,7 @@ router.use("/public/files", express.static(path.join(__dirname, "/storages")));
 
 const {
 	handleProfileUpdate,
+	handleProfileCreate,
 	// handleCVUpload,
 } = require("../controllers/profiles.controller");
 
@@ -25,5 +26,7 @@ const middlewares = [auth, fileUpload.single("document")];
 
 router.put("/", middlewares, handleProfileUpdate);
 // router.post("/", middlewares, handleCVUpload);
+
+router.post("/", middlewares, handleProfileCreate)
 
 module.exports = router;
