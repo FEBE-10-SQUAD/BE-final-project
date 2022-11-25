@@ -18,6 +18,12 @@ exports.handleRegister = async (req, res) => {
 			return res.status(403).send(Payload(403, "email already exsisted", null));
 		}
 
+		if (usernameExist != null) {
+			return res
+				.status(403)
+				.send(Payload(403, "username already exsisted", null));
+		}
+
 		if (usernameExist != null && emailExist != null) {
 			return res
 				.status(403)
@@ -28,8 +34,8 @@ exports.handleRegister = async (req, res) => {
 		data.password = hash;
 
 		// create new data
-		const user = new User(data);
-		const profile = new Profile({ username: data.username });
+		const user = new User(data); //
+		const profile = new Profile({ id_user: user._id, username: data.username });
 
 		// send data to db
 		await user.save();
