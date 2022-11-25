@@ -3,9 +3,9 @@
 ```
 seluruh response
 {
-    "status": 201,
-    "message": "Account successfully created",
-    "data": null,
+    "status": status_code,
+    "message": "messasge",
+    "data": [{"property":"val"},{"property":"val"}],
     "date": "2022-11-23T10:50:39.070Z"
 }
 
@@ -24,6 +24,9 @@ body:
     "password": "test"
 }
 
+PUT: /api/profile/:id
+body:
+form: pdf file
 ---
 
 **Get Data**

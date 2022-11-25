@@ -54,5 +54,7 @@ exports.handleLogin = async (req, res) => {
 		expiresIn: process.env.TOKEN_EXPIRATION,
 	});
 
-	return res.status(200).send(Payload(200, "login successful", { token }));
+	return res
+		.status(200)
+		.send(Payload(200, "login successful", { id: dbUserData._id, token }));
 };

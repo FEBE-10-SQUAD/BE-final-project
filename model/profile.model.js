@@ -10,6 +10,7 @@ const profileSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "User",
 	},
+	profile_picture: String,
 	nama: String,
 	kota: String,
 	alamat: String,

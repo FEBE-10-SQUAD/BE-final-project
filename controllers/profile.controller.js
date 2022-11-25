@@ -1,82 +1,74 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const cloudinary = require("../cloudinaries/cloudinary");
 
 const User = require("../model/user.model");
 const Profile = require("../model/profile.model");
 const { Payload } = require("../templates/response");
 
-exports.handlProfileUpdate = async (req, res) => {
-	const username = res.locals.username;
-	try {
-		const dbUserData = await User.findOne({ username }, "-_id -password -__v");
-
-		if (dbUserData == null) {
-			return res.status(404).send(Payload(404, "data not found", null));
-		}
-
-		if (dbUserData.username != username) {
-			return res
-				.status(403)
-				.send(Payload(403, "you must update your own profile", null));
-		}
-	} catch (err) {
-		return res.status(500).send(Payload(500, "internal server error", err));
-	}
-
+exports.handleProfileUpdate = async (req, res) => {
+	// 	{
+	//     "profile": {
+	//         "nama":"sssswwsss",
+	//         "kota":"kota",
+	//         "alamat":"alasssddsat",
+	//         "tanggal_lahir":"2010-11-23T15:20:33.324Z",
+	//         "no_handphone":"123123133",
+	//         "about_me":"about_me"
+	//     }
+	// }
+	const { id } = req.params;
 	const body = req.body;
-	const userUpdate = body.user;
 
-	const profileUpdate = body.profile;
-	profileUpdate.username = userUpdate.username;
-
-	if (profileUpdate.username != undefined) {
-		let dbUserData = await User.findOne({ username: profileUpdate.username });
-		if (dbUserData != null) {
-			return res
-				.status(401)
-				.send(Payload(401, "username already exsist", null));
-		}
-	}
+	let document = req.file; // udh melewati multer
 
 	try {
-		let dbUserData = await User.findOneAndUpdate({ username }, userUpdate);
+		if (document != undefined) {
+			// convert buffer to base64
+			const fileBase64 = document.buffer.toString("base64");
 
-		if (dbUserData == null) {
-			return res.status(500).send(Payload(500, "data not updated", null));
+			// build file from base64
+			const file = `data:${document.mimetype};base64,${fileBase64}`;
+
+			// upload file to cloudinary
+			const cloudinaryDocuments = await cloudinary.uploader.upload(file);
+
+			// disini ada memory leak di sisi cloudinary
+
+			// save document URL
+			var documentURL = cloudinaryDocuments.url;
+
+			// update database
+			const userData = await Profile.findOneAndUpdate(
+				{ id_user: id },
+				{ profile_picture: documentURL }
+			);
+
+			// end request
+			if (documentURL != undefined) {
+				return res
+					.status(201)
+					.send(Payload(201, "document succesfully uploaded", null));
+			} else {
+				return res
+					.status(500)
+					.send(Payload(500, "document failed to upload", null));
+			}
 		}
 
-		// jwt
-		const tokenPayload = {
-			username: profileUpdate.username,
-			role: dbUserData.role,
-		};
+		let update = body.profile;
 
-		const newToken = jwt.sign(tokenPayload, process.env.SECRET_KEY);
-
-		const dbProfileData = await Profile.findOneAndUpdate(
-			{ username },
-			profileUpdate
-		);
-
-		if (dbProfileData == null) {
-			return res.status(500).send(Payload(500, "data not updated", null));
-		}
-
-		if (profileUpdate.username == undefined) {
-			return res.status(201).send(Payload(201, "updated profile", null));
-		} else {
+		const userData = await Profile.findOneAndUpdate({ id_user: id }, update);
+		if (userData) {
 			return res
 				.status(201)
-				.send(
-					Payload(201, "updated username and profile", { token: newToken })
-				);
+				.send(Payload(201, "data successfully updated", null));
+		} else {
+			return res.status(500).send(Payload(500, "data is not updated", null));
 		}
 	} catch (err) {
-		return res.status(500).send(Payload(500, "database error", err));
+		return res.status(500).send(Payload(500, "unknown error", null));
 	}
 };
 
-exports.handleCVUpload = async (req, res) => {
-	console.log(await req.file);
-	return res.json("test");
-};
+exports.handleProfileGet = (req, res) => {};
