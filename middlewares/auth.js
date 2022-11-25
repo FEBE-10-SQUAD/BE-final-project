@@ -16,16 +16,12 @@ exports.auth = async (req, res, next) => {
 	try {
 		const { username, role, email } = jwt.verify(token, process.env.SECRET_KEY);
 
-		const getUserByEmail = await User.findOne(email);
+		const getUserByEmail = await User.findOne({ email });
 
-		if (role == "admin" || role == "user") {
-			res.locals.role = role;
-			res.locals.username = username;
-			req.user = getUserByEmail;
-			return next();
-		} else {
-			return res.status(401).send(Payload(401, "Siapa anda?", null));
-		}
+		res.locals.role = role;
+		res.locals.username = username;
+		req.user = getUserByEmail;
+		next();
 	} catch (err) {
 		return res.status(401).send(Payload(401, "Token Expired", null));
 	}
