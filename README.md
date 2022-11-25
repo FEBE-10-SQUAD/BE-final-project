@@ -1,74 +1,76 @@
 # BE-final-project
-
-```
-seluruh response
+## seluruh response
+```json
 {
     "status": status_code,
     "message": "messasge",
     "data": [{"property":"val"},{"property":"val"}],
     "date": "2022-11-23T10:50:39.070Z"
 }
+```
 
-POST: /api/register
+#### POST: /api/register
 body:
+```json
 {
     "username": "testName",
     "email": "test@test.com",
     "password": "test"
 }
+```
 
-POST: /api/login
+#### POST: /api/login
 body:
 {
     "email": "test@test.com",
     "password": "test"
 }
 
-PUT: /api/profile/:id
-body:
+#### GET: /api/profile/cv/:id
+mengambil link pada pdf
+#### POST: /api/profile/cv/:id
+upload file pdf yang ada di form-data
 form: pdf file
----
 
-**Get Data**
+#### GET: /api/profile/:id
 
-```
-GET: http://localhost:8080/v1/admin/jobs
-```
-
-```
-GET: http://localhost:8080/v1/admin/jobs?category=Backend
-```
-
-```
-GET: http://localhost:8080/v1/admin/jobs?category=Backend&name=Web
-```
-
-**Get Data By Id**
-
-```
-GET: http://localhost:8080/v1/admin/jobs/:id
+#### PUT: /api/profile/:id
+body raw: 
+```json
+{
+    "profile": {
+        "nama":"sssswwsss",
+        "kota":"kota",
+        "alamat":"alasssddsssssssssssssssssssssssssat",
+        "tanggal_lahir":"2010-11-23T15:20:33.324Z",
+        "no_handphone":"123123133",
+        "about_me":"about_me"
+    }
+}
 ```
 
-**Get Data By User Id**
-
-```
-GET: http://localhost:8080/v1/admin/:id/jobs
-```
-
-**Post Data**
-
-```
-POST: http://localhost:8080/v1/admin/jobs
-```
-
-**Update Data**
-
-```
-UPDATE: http://localhost:8080/v1/admin/jobs/:id
+property yang digunakan tidak harus semua melainkan bisa beberapa seperti ini masih valid
+```json
+{
+    "profile": {
+        "nama":"sssswwsss",
+        "kota":"kota",
+        "about_me":"about_me"
+    }
+}
 ```
 
-**Delete Data**
+untuk menghapus juga dapat dilakukan dengan cara update dengan nilai kosong
+```json
+{
+    "profile": {
+        "nama":"",
+        "kota":"",
+        "about_me":""
+    }
+}
+```
+body form-data: profile image file
 
-```
-DELETE: http://localhost:8080/v1/admin/jobs:id
-```
+#### DELETE: /api/profile/:id
+menghapus seluruh data yang ada pada profile
