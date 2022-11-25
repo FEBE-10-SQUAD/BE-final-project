@@ -18,7 +18,7 @@ exports.auth = async (req, res, next) => {
 		res.locals.id = id;
 		next();
 	} catch (err) {
-		return res.status(401).send(Payload(401, "Token Expired", null));
+		return res.status(401).send(Payload(401, "Token Invalid", null));
 	}
 };
 
