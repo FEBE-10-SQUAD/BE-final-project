@@ -14,13 +14,8 @@ exports.auth = async (req, res, next) => {
 	const token = bearerAuth.split(" ")[1];
 
 	try {
-		const { username, role, email } = jwt.verify(token, process.env.SECRET_KEY);
-
-		const getUserByEmail = await User.findOne({ email });
-
-		res.locals.role = role;
-		res.locals.username = username;
-		req.user = getUserByEmail;
+		const { id } = jwt.verify(token, process.env.SECRET_KEY);
+		res.locals.id = id;
 		next();
 	} catch (err) {
 		return res.status(401).send(Payload(401, "Token Expired", null));
