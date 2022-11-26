@@ -13,6 +13,7 @@ const { auth, adminAuth } = require("../middlewares/auth");
 
 const {
 	handleAddBookmark,
+	handleRemoveAllBookmark,
 	handleRemoveBookmark,
 	handleGetAllBookmark,
 } = require("../controllers/bookmark.controller");
@@ -21,6 +22,7 @@ const middlewares = [auth, id_token_param];
 
 router.post("/:id/job/:id_job", middlewares, handleAddBookmark);
 router.delete("/:id/job/:id_job", middlewares, handleRemoveBookmark);
+router.delete("/:id", middlewares, handleRemoveAllBookmark);
 router.get("/:id", middlewares, handleGetAllBookmark);
 
 module.exports = router;

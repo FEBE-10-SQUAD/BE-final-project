@@ -48,6 +48,33 @@ exports.handleRemoveBookmark = async (req, res) => {
 	}
 };
 
+exports.handleRemoveAllBookmark = async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const data = await Profile.findOneAndUpdate(
+			{ id_user: id },
+			{
+				$set: {
+					bookmark: [],
+				},
+			}
+		);
+
+		if (data == null) {
+			return res
+				.status(500)
+				.send(Payload(500, `failed to remove bookmark`, null));
+		}
+
+		return res
+			.status(202)
+			.send(Payload(202, "data successfully deleted", null));
+	} catch (err) {
+		return res.status(500).send(Payload(500, "Unknown error", null));
+	}
+};
+
 exports.handleGetAllBookmark = async (req, res) => {
 	const { id } = req.params;
 
