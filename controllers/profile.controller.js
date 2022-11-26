@@ -98,17 +98,17 @@ exports.handleDeleteProfile = async (req, res) => {
 
 	try {
 		const update = {
-			profile_picture: "",
-			nama: "",
-			kota: "",
-			alamat: "",
-			tanggal_lahir: "",
-			no_handphone: "",
-			about_me: "",
+			profile_picture: null,
+			nama: null,
+			kota: null,
+			alamat: null,
+			tanggal_lahir: null,
+			no_handphone: null,
+			about_me: null,
 			$set: {
 				bookmark: [],
 			},
-			document: "",
+			document: null,
 		};
 		const dbData = await Profile.findOneAndUpdate({ id_user: id }, update);
 
