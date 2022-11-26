@@ -6,6 +6,11 @@ const profileSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	id_user: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+	},
+	profile_picture: String,
 	nama: String,
 	kota: String,
 	alamat: String,

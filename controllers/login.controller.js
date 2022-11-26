@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const User = require("../model/user.model");
 const Profile = require("../model/profile.model");
 const { Payload } = require("../templates/response");
@@ -46,12 +48,13 @@ exports.handleLogin = async (req, res) => {
 
 	// generate and send token
 	const tokenPayload = {
-		username: dbUserData.username,
-		role: dbUserData.role,
+		id: dbUserData._id,
 	};
 	const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
-		expiresIn: process.env.TOKEN_EXPIRATION,
+		expiresIn: "24h",
 	});
 
-	return res.status(200).send(Payload(200, "login successful", { token }));
+	return res
+		.status(200)
+		.send(Payload(200, "login successful", { id: dbUserData._id, token }));
 };

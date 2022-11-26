@@ -1,6 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { Payload } = require("../templates/response");
+const User = require("../model/user.model");
 
 exports.auth = async (req, res, next) => {
 	const bearerAuth = req.headers.authorization;
@@ -13,17 +14,11 @@ exports.auth = async (req, res, next) => {
 	const token = bearerAuth.split(" ")[1];
 
 	try {
-		const { username, role } = await jwt.verify(token, process.env.SECRET_KEY);
-
-		if (role == "admin" || role == "user") {
-			req.role = role;
-			req.username = username;
-			return next();
-		} else {
-			return res.status(401).send(Payload(401, "Siapa anda?", null));
-		}
+		const { id } = jwt.verify(token, process.env.SECRET_KEY);
+		res.locals.id = id;
+		next();
 	} catch (err) {
-		return res.status(401).send(Payload(401, "Token Expired", null));
+		return res.status(401).send(Payload(401, "Token Invalid", null));
 	}
 };
 
