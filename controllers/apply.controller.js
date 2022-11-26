@@ -41,6 +41,33 @@ const handleUserApplyJob = async(req, res, next) => {
 // ----------------- End Handle User Apply Job  ----------------- //
 
 
+// ----------------- Handle Get Apply Job By User Id  ----------------- //
+
+const handleGetApplyJobByUserId = async(req, res, next) => {
+
+    try {
+        
+        const { id } = req.params;
+
+        const getApplyJobByUserId = await apply.find({ userId: id })
+        .populate({path: 'companyId', select: 'username'})
+        .populate({path: 'jobId', select: ['name', 'salary', 'image', 'description']});
+
+        return res
+			.status(200)
+			.send(Payload(200, "Data grabbed successfully", getApplyJobByUserId));
+
+    } catch (err) {
+
+        return res.status(500).send(Payload(500, "Internal server error", err));
+        
+    }
+
+};
+
+// ----------------- End Handle Get Apply Job By User Id  ----------------- //
+
+
 // ----------------- Handle Get Apply Job By Admin Id  ----------------- //
 
 const handleGetApplyJobByAdminId = async(req, res, next) => {
@@ -69,4 +96,4 @@ const handleGetApplyJobByAdminId = async(req, res, next) => {
 // ----------------- End Handle Get Apply Job By Admin Id  ----------------- //
 
 
-module.exports = { handleUserApplyJob, handleGetApplyJobByAdminId };
+module.exports = { handleUserApplyJob, handleGetApplyJobByUserId, handleGetApplyJobByAdminId };

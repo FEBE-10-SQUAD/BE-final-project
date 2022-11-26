@@ -11,6 +11,7 @@ router.use(cors());
 
 const {
 	handleUserApplyJob,
+    handleGetApplyJobByUserId,
     handleGetApplyJobByAdminId
 } = require("../controllers/apply.controller");
 
@@ -21,7 +22,8 @@ const middlewares = require("../middlewares/auth");
 // ----------------- Define Routes ----------------- //
 
 router.post("/users", middlewares.auth, handleUserApplyJob);
-router.get("/admin/:id", middlewares.auth, handleGetApplyJobByAdminId);
+router.get("/users/:id/status", middlewares.auth, handleGetApplyJobByUserId);
+router.get("/admin/:id/status", middlewares.auth, handleGetApplyJobByAdminId);
 
 // ----------------- Define Routes ----------------- //
 
