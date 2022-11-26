@@ -9,7 +9,7 @@
 }
 ```
 
-#### POST: /api/register
+## POST: /api/register
 body:
 ```json
 {
@@ -19,7 +19,7 @@ body:
 }
 ```
 
-#### POST: /api/login
+## POST: /api/login
 body:
 ```json
 {
@@ -28,18 +28,18 @@ body:
 }
 ```
 
-#### POST: /api/profile/cv/:id
+## POST: /api/profile/cv/:id
 upload file cv ke databse. Cara untuk mengupload from menggunakan from-data.
 form: pdf file
 
-#### GET: /api/profile/cv/:id
+## GET: /api/profile/cv/:id
 mengambil link yang menyimpan file pdf yang dapat dilihat dan download.
 
-#### GET: /api/profile/:id
+## GET: /api/profile/:id
 mengambil keseluruhan data profile yang dimiliki user termasuk link foto profil.
 
 
-#### PUT: /api/profile/:id
+## PUT: /api/profile/:id
 body raw: 
 ```json
 {
@@ -77,26 +77,27 @@ untuk menghapus juga dapat dilakukan dengan cara update dengan null atau nilai k
 ```
 
 endpoint juga dapat digunakan untuk mengupload foto profil. melalui form-data
+
 body form-data: profile image file
 
-#### DELETE: /api/profile/:id
+## DELETE: /api/profile/:id
 menghapus seluruh data yang ada pada profile, penghapusan juga termasuk dengan bookmark, cv, dan foto profil.
-id = user id
-id_job = job id
+- id = user id
+- id_job = job id
 
-#### POST: /api/bookmark/:id/job/:id_job
+## POST: /api/bookmark/:id/job/:id_job
 menambahkan bookmark pada akun user. request tidak memerlukan body.
-id = user id
-id_job = job id
+- id = user id
+- id_job = job id
 
-#### DELETE: /api/bookmark/:id/job/:id_job
+## DELETE: /api/bookmark/:id/job/:id_job
 menghapus bookmark pada user akun user. request tidak memerlukan body.
-id = user id
-id_job = job id
+- id = user id
+- id_job = job id
 
-#### DELETE: /api/bookmark/:id
+## DELETE: /api/bookmark/:id
 menghapus seluruh bookmark yang dimiliki oleh user.
-id = user id
+- id = user id
 
-#### GET: /api/bookmark/:id
+## GET: /api/bookmark/:id
 mengambil semua bookmark yang dimiliki oleh user. request tidak memerlukan body
