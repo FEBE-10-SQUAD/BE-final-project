@@ -299,7 +299,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2YxYzIyOGExMDFiZmMyZTI4NmY1YyI
 **Request**
 
 ```
-DELETE: http://localhost:8080/v1/admin/jobs:id
+DELETE: http://localhost:8080/v1/admin/jobs/:id
 ```
 
 **Token**
@@ -327,3 +327,230 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2YxYzIyOGExMDFiZmMyZTI4NmY1YyI
 }
 ```
 
+
+## **Apply Job (User & Admin)**
+
+**Post Data**
+
+**Request**
+
+```
+POST: http://localhost:8080/v1/apply-job/users
+```
+
+**Token**
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2YwYzZjMTJiNmRkMzY3OGFkYWRmNSIsImVtYWlsIjoic2FubG9rYWphQGdtYWlsLmNvbSIsImlhdCI6MTY2OTU3Mzk2OCwiZXhwIjoxNjY5NTk1NTY4fQ.oJCshvQGKSyHDyC0scL7LqNX-Sg2ClnACci_F65Il6E
+```
+
+**Body**
+
+```
+{
+    "companyId": "637f1c228a101bfc2e286f5c",
+    "jobId": "6383ad478de3435223a67668",
+    "isAccepted": "false"
+}
+```
+
+**Response**
+
+```
+{
+    "status": 201,
+    "message": "Data created successfully",
+    "data": {
+        "isAccepted": false,
+        "userId": "637f0c6c12b6dd3678adadf5",
+        "companyId": "637f1c228a101bfc2e286f5c",
+        "jobId": "6383ad478de3435223a67668",
+        "_id": "6383ad9f8de3435223a6766c",
+        "createdAt": "2022-11-27T18:34:07.534Z",
+        "updatedAt": "2022-11-27T18:34:07.534Z",
+        "__v": 0
+    },
+    "date": "2022-11-27T18:34:07.537Z"
+}
+```
+
+**Get Apply Job Data By Company Id**
+
+**Request**
+
+```
+http://localhost:8080/v1/apply-job/admin/:id/status
+```
+
+**Token**
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2YwYzZjMTJiNmRkMzY3OGFkYWRmNSIsImVtYWlsIjoic2FubG9rYWphQGdtYWlsLmNvbSIsImlhdCI6MTY2OTU3NDIxNiwiZXhwIjoxNjY5NTk1ODE2fQ.MhzwJhOwvYxNTTozgCqQ7jvRJBfqCQpZ3a9R0XPYA38
+```
+
+**Path Variables**
+
+| Key |         Value            |
+|-----|--------------------------|
+|id   | 637f1c228a101bfc2e286f5c |
+
+**Response**
+
+```
+{
+    "status": 200,
+    "message": "Data grabbed successfully",
+    "data": [
+        {
+            "_id": "6381b5b4b71d8f2100a72220",
+            "isAccepted": false,
+            "userId": {
+                "_id": "637f0c6c12b6dd3678adadf5",
+                "username": "Sanlok Aja"
+            },
+            "companyId": {
+                "_id": "637f1c228a101bfc2e286f5c",
+                "username": "PT. Tokopedia"
+            },
+            "jobId": {
+                "_id": "637f220947892454143b8093",
+                "name": "Frontend Developer (Wishlist Product)",
+                "salary": "7500000",
+                "image": "",
+                "description": "PT. Tokopedia is hiring, send your cv!"
+            },
+            "createdAt": "2022-11-26T06:44:04.668Z",
+            "updatedAt": "2022-11-26T06:44:04.668Z",
+            "__v": 0
+        },
+        {
+            "_id": "6381b5c9b71d8f2100a72224",
+            "isAccepted": false,
+            "userId": {
+                "_id": "637f28c49db147af32cc6598",
+                "username": "Anselma"
+            },
+            "companyId": {
+                "_id": "637f1c228a101bfc2e286f5c",
+                "username": "PT. Tokopedia"
+            },
+            "jobId": {
+                "_id": "637f220947892454143b8093",
+                "name": "Frontend Developer (Wishlist Product)",
+                "salary": "7500000",
+                "image": "",
+                "description": "PT. Tokopedia is hiring, send your cv!"
+            },
+            "createdAt": "2022-11-26T06:44:25.020Z",
+            "updatedAt": "2022-11-26T06:44:25.020Z",
+            "__v": 0
+        },
+        {
+            "_id": "6383ad9f8de3435223a6766c",
+            "isAccepted": false,
+            "userId": {
+                "_id": "637f0c6c12b6dd3678adadf5",
+                "username": "Sanlok Aja"
+            },
+            "companyId": {
+                "_id": "637f1c228a101bfc2e286f5c",
+                "username": "PT. Tokopedia"
+            },
+            "jobId": {
+                "_id": "6383ad478de3435223a67668",
+                "name": "Shopping Cart",
+                "salary": "6500000",
+                "image": "http://res.cloudinary.com/dbplhgttm/image/upload/v1669573958/j0u4mel0hsg9xk6qx1sl.png",
+                "description": "PT. Tokopedia is hiring, send your cv!"
+            },
+            "createdAt": "2022-11-27T18:34:07.534Z",
+            "updatedAt": "2022-11-27T18:34:07.534Z",
+            "__v": 0
+        }
+    ],
+    "date": "2022-11-27T18:35:24.204Z"
+}
+```
+
+**Get Apply Job Data By User Id**
+
+**Request**
+
+```
+http://localhost:8080/v1/apply-job/users/:id/status
+```
+
+**Token**
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2YxYzIyOGExMDFiZmMyZTI4NmY1YyIsImVtYWlsIjoidG9rb3BlZGlhQGdtYWlsLmNvbSIsImlhdCI6MTY2OTU3NDA5NywiZXhwIjoxNjY5NTk1Njk3fQ.bFWdM2dSGrzEgR8iRbo2BeK5SJSoIrt3AJCmaxfjsD8
+```
+
+**Path Variables**
+
+| Key |         Value            |
+|-----|--------------------------|
+|id   | 637f0c6c12b6dd3678adadf5 |
+
+**Response**
+
+```
+{
+    "status": 200,
+    "message": "Data grabbed successfully",
+    "data": [
+        {
+            "_id": "6381b5b4b71d8f2100a72220",
+            "isAccepted": false,
+            "userId": "637f0c6c12b6dd3678adadf5",
+            "companyId": {
+                "_id": "637f1c228a101bfc2e286f5c",
+                "username": "PT. Tokopedia"
+            },
+            "jobId": {
+                "_id": "637f220947892454143b8093",
+                "name": "Frontend Developer (Wishlist Product)",
+                "salary": "7500000",
+                "image": "",
+                "description": "PT. Tokopedia is hiring, send your cv!"
+            },
+            "createdAt": "2022-11-26T06:44:04.668Z",
+            "updatedAt": "2022-11-26T06:44:04.668Z",
+            "__v": 0
+        },
+        {
+            "_id": "6381b6b8d5bb40d1e3e28990",
+            "isAccepted": false,
+            "userId": "637f0c6c12b6dd3678adadf5",
+            "companyId": {
+                "_id": "637f0c3c12b6dd3678adadea",
+                "username": "PT. Grab"
+            },
+            "jobId": null,
+            "createdAt": "2022-11-26T06:48:24.061Z",
+            "updatedAt": "2022-11-26T06:48:24.061Z",
+            "__v": 0
+        },
+        {
+            "_id": "6383ad9f8de3435223a6766c",
+            "isAccepted": false,
+            "userId": "637f0c6c12b6dd3678adadf5",
+            "companyId": {
+                "_id": "637f1c228a101bfc2e286f5c",
+                "username": "PT. Tokopedia"
+            },
+            "jobId": {
+                "_id": "6383ad478de3435223a67668",
+                "name": "Shopping Cart",
+                "salary": "6500000",
+                "image": "http://res.cloudinary.com/dbplhgttm/image/upload/v1669573958/j0u4mel0hsg9xk6qx1sl.png",
+                "description": "PT. Tokopedia is hiring, send your cv!"
+            },
+            "createdAt": "2022-11-27T18:34:07.534Z",
+            "updatedAt": "2022-11-27T18:34:07.534Z",
+            "__v": 0
+        }
+    ],
+    "date": "2022-11-27T18:37:52.643Z"
+}
+```
