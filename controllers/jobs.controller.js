@@ -74,15 +74,15 @@ const handleGetJobById = async (req, res) => {
 // ----------------- End Handle Get Job By Id ----------------- //
 
 
-// ----------------- Handle Get Job By User Id ----------------- //
+// ----------------- Handle Get Job By Company Id ----------------- //
 
-const handleGetJobByUserId = async (req, res) => {
+const handleGetJobByCompanyId = async (req, res) => {
 
 	try {
 
 		const { id } = req.params;
 
-		const data = await jobs.find({ userId: id });
+		const data = await jobs.find({ companyId: id });
 
 		return res
 			.status(200)
@@ -96,7 +96,7 @@ const handleGetJobByUserId = async (req, res) => {
 
 };
 
-// ----------------- End Handle Get Job By User Id ----------------- //
+// ----------------- End Handle Get Job By Company Id ----------------- //
 
 
 // ----------------- Handle Admin Create Job ----------------- //
@@ -256,7 +256,7 @@ const handleAdminDeleteJob = async (req, res) => {
 module.exports = {
 	handleGetJob,
 	handleGetJobById,
-	handleGetJobByUserId,
+	handleGetJobByCompanyId,
 	handleAdminCreateJob,
 	handleAdminUpdateJob,
 	handleAdminDeleteJob,
