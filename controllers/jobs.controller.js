@@ -3,13 +3,10 @@ const cloudinary = require("../cloudinaries/cloudinary");
 
 const { Payload } = require("../templates/response");
 
-
 // ----------------- Handle Get Job ----------------- //
 
 const handleGetJob = async (req, res) => {
-
 	try {
-
 		const { category, name } = req.query;
 
 		if (category) {
@@ -37,24 +34,17 @@ const handleGetJob = async (req, res) => {
 		return res
 			.status(200)
 			.send(Payload(200, "Data successfully grabbed", data));
-
 	} catch (err) {
-
 		return res.status(500).send(Payload(500, "Internal server error", err));
-
 	}
-
 };
 
 // ----------------- End Handle Get Job ----------------- //
 
-
 // ----------------- Handle Get Job By Id ----------------- //
 
 const handleGetJobById = async (req, res) => {
-
 	try {
-
 		const { id } = req.params;
 
 		const data = await jobs.findById(id);
@@ -62,49 +52,35 @@ const handleGetJobById = async (req, res) => {
 		return res
 			.status(200)
 			.send(Payload(200, "Data successfully grabbed", data));
-
 	} catch (err) {
-
 		return res.status(500).send(Payload(500, "Internal server error", err));
-
 	}
-
 };
 
 // ----------------- End Handle Get Job By Id ----------------- //
 
+// ----------------- Handle Get Job By Company Id ----------------- //
 
-// ----------------- Handle Get Job By User Id ----------------- //
-
-const handleGetJobByUserId = async (req, res) => {
-
+const handleGetJobByCompanyId = async (req, res) => {
 	try {
-
 		const { id } = req.params;
 
-		const data = await jobs.find({ userId: id });
+		const data = await jobs.find({ companyId: id });
 
 		return res
 			.status(200)
 			.send(Payload(200, "Data successfully grabbed", data));
-
 	} catch (err) {
-
 		return res.status(500).send(Payload(500, "Internal server error", err));
-
 	}
-
 };
 
-// ----------------- End Handle Get Job By User Id ----------------- //
-
+// ----------------- End Handle Get Job By Company Id ----------------- //
 
 // ----------------- Handle Admin Create Job ----------------- //
 
 const handleAdminCreateJob = async (req, res) => {
-
 	try {
-
 		const {
 			category,
 			name,
@@ -145,24 +121,17 @@ const handleAdminCreateJob = async (req, res) => {
 		return res
 			.status(201)
 			.send(Payload(201, "Data created successfully", jobsInput));
-
 	} catch (err) {
-
 		return res.status(500).send(Payload(500, "Internal server error", err));
-
 	}
-
 };
 
 // ----------------- End Handle Admin Create Job ----------------- //
 
-
 // ----------------- Handle Admin Update Job ----------------- //
 
 const handleAdminUpdateJob = async (req, res) => {
-
 	try {
-
 		const { id } = req.params;
 
 		const {
@@ -211,24 +180,17 @@ const handleAdminUpdateJob = async (req, res) => {
 				})
 			);
 		}
-
 	} catch (err) {
-
 		return res.status(500).send(Payload(500, "Internal server error", err));
-		
 	}
-
 };
 
 // ----------------- End Handle Admin Update Job ----------------- //
 
-
 // ----------------- Handle Admin Delete Job ----------------- //
 
 const handleAdminDeleteJob = async (req, res) => {
-
 	try {
-
 		const { id } = req.params;
 
 		const getJobDataById = await jobs.findById(id);
@@ -242,13 +204,9 @@ const handleAdminDeleteJob = async (req, res) => {
 				})
 			);
 		}
-
 	} catch (err) {
-
 		return res.status(500).send(Payload(500, "Internal server error", err));
-
 	}
-
 };
 
 // ----------------- End Handle Admin Delete Job ----------------- //
@@ -256,7 +214,7 @@ const handleAdminDeleteJob = async (req, res) => {
 module.exports = {
 	handleGetJob,
 	handleGetJobById,
-	handleGetJobByUserId,
+	handleGetJobByCompanyId,
 	handleAdminCreateJob,
 	handleAdminUpdateJob,
 	handleAdminDeleteJob,

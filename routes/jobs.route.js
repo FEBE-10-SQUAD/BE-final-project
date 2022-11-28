@@ -21,7 +21,7 @@ router.use("/public/files", express.static(path.join(__dirname, "/storages")));
 const {
 	handleGetJob,
 	handleGetJobById,
-	handleGetJobByUserId,
+	handleGetJobByCompanyId,
 	handleAdminCreateJob,
 	handleAdminUpdateJob,
 	handleAdminDeleteJob,
@@ -35,9 +35,19 @@ const middlewares = require("../middlewares/auth");
 
 router.get("/jobs", handleGetJob);
 router.get("/jobs/:id", handleGetJobById);
-router.get("/:id/jobs", middlewares.auth, handleGetJobByUserId);
-router.post("/jobs", middlewares.auth, fileUpload.single("image"), handleAdminCreateJob);
-router.put("/jobs/:id", middlewares.auth, fileUpload.single("image"), handleAdminUpdateJob);
+router.get("/:id/jobs", middlewares.auth, handleGetJobByCompanyId);
+router.post(
+	"/jobs",
+	middlewares.auth,
+	fileUpload.single("image"),
+	handleAdminCreateJob
+);
+router.put(
+	"/jobs/:id",
+	middlewares.auth,
+	fileUpload.single("image"),
+	handleAdminUpdateJob
+);
 router.delete("/jobs/:id", middlewares.auth, handleAdminDeleteJob);
 
 // ----------------- Define Routes ----------------- //

@@ -3,21 +3,21 @@ const { Schema } = mongoose;
 
 const jobsSchema = new Schema(
 	{
-		category: String,
-		name: String,
-		company: String,
-		employee: String,
-		experience: String,
-		salary: String,
-		image: String,
-		description: String,
+		category: "String",
+		name: "String",
+		company: "String",
+		employee: "String",
+		experience: "String",
+		salary: "String",
+		image: "String",
+		description: "String",
 		companyId: {
-			type: Object,
-			ref: "User"
-		}
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+		},
 	},
 	{
-		timestamps: true
+		timestamps: true,
 	}
 );
 
