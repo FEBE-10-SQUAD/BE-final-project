@@ -29,11 +29,18 @@ body:
 ```
 
 ## POST: /api/profile/cv/:id
-upload file cv ke databse. Cara untuk mengupload from menggunakan from-data.
+upload file cv ke databse. Cara untuk mengupload from menggunakan form-data.
 form: pdf file
 
 ## GET: /api/profile/cv/:id
 mengambil link yang menyimpan file pdf yang dapat dilihat dan download.
+
+## PUT: /api/profile/cv/:id
+update file cv ke database. Cara untuk mengupload from menggunakan form-data.
+form: pdf file
+
+## DELETE: /api/profile/cv/:id
+menghapus cv yang telah diupload
 
 ## GET: /api/profile/:id
 mengambil keseluruhan data profile yang dimiliki user termasuk link foto profil.
