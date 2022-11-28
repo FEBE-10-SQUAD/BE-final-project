@@ -15,44 +15,37 @@ exports.handleLogin = async (req, res) => {
 
 		if (!getUserByEmail) {
 			return res.status(401).send(Payload(401, "Email not registered ", null));
-		} else {
-			const isPasswordMatch = bcrypt.compareSync(
-				password,
-				getUserByEmail.password
-			);
+		}
+		const isPasswordMatch = bcrypt.compareSync(
+			password,
+			getUserByEmail.password
+		);
 
-			if (isPasswordMatch) {
-				const token = jwt.sign(
-					{
-						id: getUserByEmail.id,
-						email: getUserByEmail.email,
-					},
-					process.env.SECRET_KEY,
-					{
-						expiresIn: process.env.TOKEN_EXPIRATION,
-					}
+		if (isPasswordMatch) {
+			// generate and send token
+			const tokenPayload = {
+				id: getUserByEmail._id,
+				email: getUserByEmail.email,
+				role: getUserByEmail.role,
+			};
+			const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
+				expiresIn: "24h",
+			});
+
+			return res
+				.status(200)
+				.send(
+					Payload(200, "login successful", { id: getUserByEmail._id, token })
 				);
-
-				return res
-					.status(201)
-					.send(Payload(201, "login successful", { token }));
-			}
+		} else {
+			return res.status(401).send(
+				Payload(401, "please check your password", {
+					id: getUserByEmail._id,
+					token,
+				})
+			);
 		}
 	} catch (err) {
 		return res.status(500).send(Payload(500, "internal server error", err));
 	}
-
-	// generate and send token
-	const tokenPayload = {
-		id: dbUserData._id,
-		email: dbUserData.email,
-		role: dbUserData.role,
-	};
-	const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
-		expiresIn: "24h",
-	});
-
-	return res
-		.status(200)
-		.send(Payload(200, "login successful", { id: dbUserData._id, token }));
 };
