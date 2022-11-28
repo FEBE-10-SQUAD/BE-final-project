@@ -61,7 +61,7 @@ const handleGetJobById = async (req, res) => {
 
 // ----------------- Handle Get Job By Company Id ----------------- //
 
-const handleGetJobByCompanyId = async (req, res) => {
+const handleGetJobByCompanyId = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 
@@ -79,7 +79,7 @@ const handleGetJobByCompanyId = async (req, res) => {
 
 // ----------------- Handle Admin Create Job ----------------- //
 
-const handleAdminCreateJob = async (req, res) => {
+const handleAdminCreateJob = async (req, res, next) => {
 	try {
 		const {
 			category,
@@ -130,7 +130,7 @@ const handleAdminCreateJob = async (req, res) => {
 
 // ----------------- Handle Admin Update Job ----------------- //
 
-const handleAdminUpdateJob = async (req, res) => {
+const handleAdminUpdateJob = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 
@@ -189,7 +189,7 @@ const handleAdminUpdateJob = async (req, res) => {
 
 // ----------------- Handle Admin Delete Job ----------------- //
 
-const handleAdminDeleteJob = async (req, res) => {
+const handleAdminDeleteJob = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 
