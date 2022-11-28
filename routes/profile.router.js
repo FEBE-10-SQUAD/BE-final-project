@@ -17,6 +17,8 @@ const {
 	handleGetProfile,
 	handleDeleteProfile,
 	handleGetCV,
+	handleDeleteCV,
+	handleUpdateCV,
 } = require("../controllers/profile.controller");
 
 const fileUpload = require("../utils/fileUpload");
@@ -31,5 +33,7 @@ router.delete("/:id", middlewares, handleDeleteProfile);
 
 router.get("/cv/:id", middlewares, handleGetCV);
 router.post("/cv/:id", middlewares, handleCVUpload);
+router.delete("/cv/:id", middlewares, handleDeleteCV);
+router.put("/cv/:id", middlewares, handleUpdateCV);
 
 module.exports = router;

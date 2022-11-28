@@ -3,7 +3,6 @@ const router = express.Router();
 
 // ----------------- Import Router ----------------- //
 const jobsRoute = require("./jobs.route");
-const testRoute = require("./test.route");
 const registerRoute = require("./register.router");
 const loginRoute = require("./login.router");
 const profileRoute = require("./profile.router");
