@@ -23,7 +23,7 @@ const middlewares = require("../middlewares/auth");
 
 router.post("/users", middlewares.auth, handleUserApplyJob);
 router.get("/users/:id/status", middlewares.auth, handleGetApplyJobByUserId);
-router.get("/admin/:id/status", middlewares.auth, handleGetApplyJobByAdminId);
+router.get("/admin/:id/status", middlewares.auth, middlewares.adminAuth, handleGetApplyJobByAdminId);
 
 // ----------------- Define Routes ----------------- //
 

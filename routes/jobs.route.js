@@ -39,16 +39,18 @@ router.get("/:id/jobs", middlewares.auth, handleGetJobByCompanyId);
 router.post(
 	"/jobs",
 	middlewares.auth,
+	middlewares.adminAuth,
 	fileUpload.single("image"),
 	handleAdminCreateJob
 );
 router.put(
 	"/jobs/:id",
 	middlewares.auth,
+	middlewares.adminAuth,
 	fileUpload.single("image"),
 	handleAdminUpdateJob
 );
-router.delete("/jobs/:id", middlewares.auth, handleAdminDeleteJob);
+router.delete("/jobs/:id", middlewares.auth, middlewares.adminAuth, handleAdminDeleteJob);
 
 // ----------------- Define Routes ----------------- //
 
