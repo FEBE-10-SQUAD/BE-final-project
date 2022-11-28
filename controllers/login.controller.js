@@ -49,3 +49,22 @@ exports.handleLogin = async (req, res) => {
 		return res.status(500).send(Payload(500, "internal server error", err));
 	}
 };
+
+
+exports.handleCurrentUser = async(req, res, next) => {
+
+	try {
+		
+		const currentUser = req.user;
+
+		res.status(200).send(
+			Payload(200, "Get current user success", {
+				currentUser,
+			})
+		);
+
+	} catch (err) {
+		return res.status(500).send(Payload(500, "internal server error", err));
+	}
+
+};
