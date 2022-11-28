@@ -14,7 +14,11 @@ exports.auth = async (req, res, next) => {
 	const token = bearerAuth.split(" ")[1];
 
 	try {
-		const { id } = jwt.verify(token, process.env.SECRET_KEY);
+		const { id, role, email } = jwt.verify(token, process.env.SECRET_KEY);
+
+		const getUserByEmail = await User.findOne({ email });
+		req.user = getUserByEmail;
+		req.role = role;
 		res.locals.id = id;
 		next();
 	} catch (err) {

@@ -45,6 +45,8 @@ exports.handleLogin = async (req, res) => {
 	// generate and send token
 	const tokenPayload = {
 		id: dbUserData._id,
+		email: dbUserData.email,
+		role: dbUserData.role,
 	};
 	const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, {
 		expiresIn: "24h",
