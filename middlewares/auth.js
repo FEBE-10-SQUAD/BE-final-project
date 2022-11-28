@@ -26,9 +26,10 @@ exports.auth = async (req, res, next) => {
 	}
 };
 
-exports.adminAuth = (res, req, next) => {
-	if (req.role != "admin") {
-		res.status(403).send(Payload(403, "Forbidden Access", null));
-	}
-	next();
+exports.adminAuth = (req, res, next) => {
+
+	if (req.role === "admin") return next();
+	
+	return res.status(403).send(Payload(403, "Forbidden Access", null));
+
 };
