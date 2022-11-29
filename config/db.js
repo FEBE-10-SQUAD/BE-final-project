@@ -1,6 +1,7 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
-const DB_URL = "mongodb://127.0.0.1:27017/skilvul_final_project";
+const DB_URL = `mongodb://mongo:${process.env.DB_PASSWORD}@containers-us-west-138.railway.app:7440`;
 
 const db = mongoose.connect(DB_URL);
 
