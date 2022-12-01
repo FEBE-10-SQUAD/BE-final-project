@@ -9,7 +9,7 @@
 }
 ```
 
-## POST: /api/register
+## POST: `http://localhost:8080/register`
 body:
 ```json
 {
@@ -19,7 +19,7 @@ body:
 }
 ```
 
-## POST: /api/login
+## POST: http://localhost:8080/login
 body:
 ```json
 {
@@ -28,58 +28,52 @@ body:
 
 ```
 
-## POST: /api/profile/cv/:id
+## POST: http://localhost:8080/profile/cv/:id
 upload file cv ke databse. Cara untuk mengupload from menggunakan form-data.
 form: pdf file
 
-## GET: /api/profile/cv/:id
+## GET: http://localhost:8080/profile/cv/:id
 mengambil link yang menyimpan file pdf yang dapat dilihat dan download.
 
-## PUT: /api/profile/cv/:id
+## PUT: http://localhost:8080/profile/cv/:id
 update file cv ke database. Cara untuk mengupload from menggunakan form-data.
 form: pdf file
 
-## DELETE: /api/profile/cv/:id
+## DELETE: http://localhost:8080/profile/cv/:id
 menghapus cv yang telah diupload
 
-## GET: /api/profile/:id
+## GET: http://localhost:8080/profile/:id
 mengambil keseluruhan data profile yang dimiliki user termasuk link foto profil.
 
 
-## PUT: /api/profile/:id
+## PUT: http://localhost:8080/profile/:id
 body raw: 
 ```json
 {
-  "profile": {
     "nama":"sssswwsss",
     "kota":"kota",
     "alamat":"alasssddsssssssssssssssssssssssssat",
     "tanggal_lahir":"2010-11-23T15:20:33.324Z",
     "no_handphone":"123123133",
     "about_me":"about_me"
-  }
 }
 ```
 
 property yang digunakan tidak harus semua melainkan bisa beberapa seperti ini masih valid
 ```json
 {
-  "profile": {
     "nama":"sssswwsss",
     "kota":"kota",
     "about_me":"about_me"
-  }
 }
 ```
 
 untuk menghapus juga dapat dilakukan dengan cara update dengan null atau nilai kosong
 ```json
 {
-  "profile": {
     "nama":"",
     "kota":null,
     "about_me":""
-  }
 }
 ```
 
@@ -87,26 +81,26 @@ endpoint juga dapat digunakan untuk mengupload foto profil. melalui form-data
 
 body form-data: profile image file
 
-## DELETE: /api/profile/:id
+## DELETE: `http://localhost:8080/profile/:id`
 menghapus seluruh data yang ada pada profile, penghapusan juga termasuk dengan bookmark, cv, dan foto profil.
 - id = user id
 - id_job = job id
 
-## POST: /api/bookmark/:id/job/:id_job
+## POST: `http://localhost:8080/bookmark/:id/job/:id_job`
 menambahkan bookmark pada akun user. request tidak memerlukan body.
 - id = user id
 - id_job = job id
 
-## DELETE: /api/bookmark/:id/job/:id_job
+## DELETE: `http://localhost:8080/bookmark/:id/job/:id_job`
 menghapus bookmark pada user akun user. request tidak memerlukan body.
 - id = user id
 - id_job = job id
 
-## DELETE: /api/bookmark/:id
+## DELETE: `http://localhost:8080/bookmark/:id`
 menghapus seluruh bookmark yang dimiliki oleh user.
 - id = user id
 
-## GET: /api/bookmark/:id
+## GET: `http://localhost:8080/bookmark/:id`
 mengambil semua bookmark yang dimiliki oleh user. request tidak memerlukan body
 
 ---

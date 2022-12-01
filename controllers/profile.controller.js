@@ -69,7 +69,7 @@ exports.handleProfileUpdate = async (req, res) => {
 		}
 
 		const body = req.body;
-		let update = body.profile;
+		let update = body;
 
 		const userData = await Profile.findOneAndUpdate({ id_user: id }, update);
 		if (userData) {
